@@ -1,0 +1,22 @@
+{
+    tls off
+}
+
+http://0.0.0.0 {
+    log     stdout
+    errors  stderr
+    gzip
+    
+    root    /srv/dns-ui/public_html
+    
+    fastcgi / 127.0.0.1:9000 php {
+        env PHP_AUTH_USER {>X-Auth-User}
+        index init.php
+    }
+    
+    rewrite {
+        to  {path} /init.php/{query}
+    }
+
+    on startup php-fpm
+}

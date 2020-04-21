@@ -1,0 +1,30 @@
+version: "3.2"
+
+services:
+  dnsui-ext:
+    build: .
+    image: opera-dns-ui
+    depends_on:
+      - dnsui-db
+    environment:
+      - ADMIN_USER=admin
+      - POSTGRES_HOST=dnsui-db
+      - POSTGRES_DB=dnsui
+      - POSTGRES_USER=dnsui
+      - POSTGRES_PASSWORD=dnsui
+      - PDNS_API_HOST=172.17.0.1
+      - PDNS_API_PORT=8081
+      - PDNS_API_KEY=change
+    volumes:
+     - ./dnsui-conf:/data
+
+  dnsui-db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+     - ./dnsui-data:/var/lib/postgresql/data
+     - ./dnsui-init.sql:/docker-entrypoint-initdb.d/1_dnsui-init.sql
+
