@@ -10,6 +10,7 @@ An initial user is created during database initialisation by the application, sp
 |Variable Name|Default|Description|
 |-|-|-|
 |`ADMIN_USER`|`admin`|Initial admin username for DNS UI|
+|`MAIL_SERVER`|`smtp`|SMTP mail server hostname for outgoing mail|
 |`POSTGRES_HOST`|`postgres`|Postgresql database host|
 |`POSTGRES_DB`|`dnsui`|Database name|
 |`POSTGRES_USER`|`dnsui`|Database user/role|
@@ -21,6 +22,7 @@ An initial user is created during database initialisation by the application, sp
 ### Example docker invocation:
 
     docker run -d                                      \
+           -e MAIL_SERVER=smtp.example.com             \
            -e POSTGRES_HOST=dbhost.example.com         \
            -e POSTGRES_PASSWORD=a-very-secret-password \
            -e PDNS_API_HOST=dns.example.com            \

@@ -3,6 +3,7 @@ set -e
 
 # Defaults
 ADMIN_USER=${ADMIN_USER:-admin}
+MAIL_SERVER=${MAIL_SERVER:-smtp}
 POSTGRES_HOST=${POSTGRES_HOST:-postgres}
 POSTGRES_DB=${POSTGRES_DB:-pdns}
 POSTGRES_USER=${POSTGRES_USER:-pdns}
@@ -12,6 +13,8 @@ PDNS_API_PORT=${PDNS_API_PORT:-8081}
 PDNS_API_KEY=${PDNS_API_KEY:-unset}
 
 mkdir -p /data
+
+sed -i -e "s/^mailhub=.*$/mailhub=${MAIL_SERVER}/" /etc/ssmtp/ssmtp.conf
 
 if [ ! -f /data/config.ini ]; then
 	echo "Creating initial config file..."

@@ -5,11 +5,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install php extension build deps
 RUN apt-get update -y \
  && apt-get upgrade -yq --no-install-recommends --no-install-suggests \
- && apt-get install -yq --no-install-recommends --no-install-suggests nullmailer libldb-dev libldap2-dev libcurl4-openssl-dev libicu-dev libpq-dev postgresql-client netcat \
+ && apt-get install -yq --no-install-recommends --no-install-suggests libldb-dev libldap2-dev libcurl4-openssl-dev libicu-dev libpq-dev postgresql-client netcat \
+ && sed -i -e '$a\deb http://deb.debian.org/debian bullseye main' /etc/apt/sources.list \
+ && apt-get update -y \
+ && apt-get install -yq --no-install-recommends --no-install-suggests -t buster ssmtp \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
- && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so
+ && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so \
+ && sed -i -e 's/^.*FromLineOverride=.*$/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf \
+ && ( echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/docker-php-mail.conf )
 
 RUN docker-php-ext-install pdo_pgsql pgsql ldap intl
 
