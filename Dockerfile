@@ -14,7 +14,7 @@ RUN apt-get update -y \
  && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
  && ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so \
  && sed -i -e 's/^.*FromLineOverride=.*$/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf \
- && ( echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/docker-php-mail.conf )
+ && ( echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/docker-php-mail.ini )
 
 RUN docker-php-ext-install pdo_pgsql pgsql ldap intl
 
