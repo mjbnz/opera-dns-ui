@@ -8,7 +8,7 @@ RUN apt-get update -y \
  && apt-get install -yq --no-install-recommends --no-install-suggests libldb-dev libldap2-dev libcurl4-openssl-dev libicu-dev libpq-dev postgresql-client netcat \
  && sed -i -e '$a\deb http://deb.debian.org/debian bullseye main' /etc/apt/sources.list \
  && apt-get update -y \
- && apt-get install -yq --no-install-recommends --no-install-suggests -t buster ssmtp \
+ && apt-get install -yq --no-install-recommends --no-install-suggests ssmtp \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so \
