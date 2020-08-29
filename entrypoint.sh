@@ -5,6 +5,7 @@ set -e
 ADMIN_USER=${ADMIN_USER:-admin}
 MAIL_SERVER=${MAIL_SERVER:-smtp}
 POSTGRES_HOST=${POSTGRES_HOST:-postgres}
+POSTGRES_PORT=${POSTGRES_PORT:-5432}
 POSTGRES_DB=${POSTGRES_DB:-pdns}
 POSTGRES_USER=${POSTGRES_USER:-pdns}
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-pdns}
@@ -24,7 +25,7 @@ ln -sf /data/config.ini /srv/dns-ui/config/
 
 if grep -q '^; AUTOCONFIG_ENABLED=yes$' /data/config.ini; then
 	echo "Updating configuration..."
-	sed -e "s/^\(dsn\s*=\s*\"pgsql:host=\)[^;]\+\(;dbname=\)[^;]\+\"$/\1${POSTGRES_HOST}\2${POSTGRES_DB}\"/"               \
+	sed -e "s/^\(dsn\s*=\s*\"pgsql:host=\)[^;]\+\(;port=\)[^;]\+\(;dbname=\)[^;]\+\"$/\1${POSTGRES_HOST}\2${POSTGRES_PORT}\3${POSTGRES_DB}\"/"               \
 	    -e "s/^\(username\s*=\s*\"\).*\"$/\1${POSTGRES_USER}\"/"                                                           \
 	    -e "s/^\(password\s*=\s*\"\).*\"$/\1${POSTGRES_PASSWORD}\"/"                                                       \
 	    -e "s/^\(api_url\s*=\s*\"http:\/\/\).*\(\/api\/v1\/servers\/localhost\"\)$/\1${PDNS_API_HOST}:${PDNS_API_PORT}\2/" \
@@ -46,7 +47,7 @@ if ! grep -q 'INSERT INTO "user"' /srv/dns-ui/migrations/002.php; then
 	EOF
 fi
 
-while ! nc -z "$POSTGRES_HOST" 5432; do
+while ! nc -z "$POSTGRES_HOST" "$POSTGRES_PORT"; do
 	echo "Waiting for database..."
 	sleep 1
 done

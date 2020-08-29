@@ -12,6 +12,7 @@ An initial user is created during database initialisation by the application, sp
 |`ADMIN_USER`|`admin`|Initial admin username for DNS UI|
 |`MAIL_SERVER`|`smtp`|SMTP mail server hostname for outgoing mail|
 |`POSTGRES_HOST`|`postgres`|Postgresql database host|
+|`POSTGRES_PORT`|`5432`|Postgresql database port|
 |`POSTGRES_DB`|`dnsui`|Database name|
 |`POSTGRES_USER`|`dnsui`|Database user/role|
 |`POSTGRES_PASSWORD`|`dnsui`|Database password|

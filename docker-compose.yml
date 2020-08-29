@@ -9,6 +9,7 @@ services:
     environment:
       - ADMIN_USER=admin
       - POSTGRES_HOST=dnsui-db
+      - POSTGRES_PORT=5432
       - POSTGRES_DB=dnsui
       - POSTGRES_USER=dnsui
       - POSTGRES_PASSWORD=dnsui
