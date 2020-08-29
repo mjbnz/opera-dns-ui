@@ -21,7 +21,7 @@ RUN docker-php-ext-install pdo_pgsql pgsql ldap intl
 # Install Caddy
 RUN curl --silent --show-error --fail --location \
          --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" -o - \
-         "https://caddyserver.com/download/linux/amd64?plugins=http.expires,http.realip&license=personal" \
+         "https://github.com/caddyserver/caddy/releases/download/v1.0.4/caddy_v1.0.4_linux_amd64.tar.gz" \
   | tar --no-same-owner -C /usr/bin/ -xz caddy \
  && chmod 0755 /usr/bin/caddy \
  && /usr/bin/caddy -version
