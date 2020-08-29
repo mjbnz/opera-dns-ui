@@ -29,8 +29,9 @@ RUN curl --silent --show-error --fail --location \
 # Install dns-ui
 RUN mkdir -p /srv/dns-ui \
  && cd /srv/dns-ui \
- && curl -L -o - https://github.com/operasoftware/dns-ui/archive/master.tar.gz \
-  | tar --strip-components=1 -zxv \
+ && curl --silent --show-error --fail --location \
+         -o - "https://github.com/operasoftware/dns-ui/archive/master.tar.gz" \
+  | tar --strip-components=1 -xz \
  && chown -R www-data:www-data .
 
 COPY Caddyfile /etc/Caddyfile
